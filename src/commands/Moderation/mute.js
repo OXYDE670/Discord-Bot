@@ -61,6 +61,14 @@ class Mute extends Command {
 
 		// get mute role
 		let muteRole = message.guild.roles.cache.get(settings.MutedRole);
+		message.guild.channels.cache.forEach(async (channel) => {
+			await channel.permissionOverwrites.create(muteRole, {
+				SEND_MESSAGES: false,
+				ADD_REACTIONS: false,
+				SPEAK: false,
+				CONNECT: false,
+			})
+		})
 		// If role not found then make role
 		if (!muteRole) {
 			try {
